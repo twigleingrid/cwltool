@@ -915,6 +915,23 @@ def test_format_expr_error() -> None:
     )
 
 
+def test_format_expr_error2() -> None:
+    """Better format expression error, for a list of formats."""
+    error_code, _, stderr = get_main_output(
+        [
+            get_data("tests/wf/bad_formattest2.cwl"),
+            get_data("tests/wf/formattest-job.json"),
+        ]
+    )
+    assert error_code != 0
+    stderr = re.sub(r"\s\s+", " ", stderr)
+    assert (
+        "An expression in the 'format' field must evaluate to a string, or list "
+        "of strings. However a non-string item was received: '42' of "
+        "type '<class 'int'>'." in stderr
+    )
+
+
 def test_static_checker() -> None:
     # check that the static checker raises exception when a source type
     # mismatches its sink type.
