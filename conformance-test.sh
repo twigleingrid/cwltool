@@ -47,6 +47,10 @@ if [ "${container}" == "docker" ]; then
     docker pull node:slim
 fi
 
+if [ "${container}" == "podman" ]; then
+    podman pull node:slim
+fi
+
 venv cwltool-venv3
 pip3 install -U setuptools wheel pip
 pip3 uninstall -y cwltool
@@ -109,6 +113,8 @@ if [[ "$container" = "singularity" ]]; then
         # See issue #1440
         exclusions+=(stdin_shorcut)
     fi
+elif [[ "$container" = "podman" ]]; then
+    EXTRA+=" --podman"
 fi
 
 if [ -n "$EXTRA" ]
