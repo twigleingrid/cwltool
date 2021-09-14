@@ -343,11 +343,11 @@ class DockerCommandLineJob(ContainerCommandLineJob):
             runtime = ["podman", "run", "-i"]
         else:
             runtime = ["docker", "run", "-i"]
-        os.chmod(os.path.realpath(self.outdir), 0o777)
+        os.chmod(os.path.realpath(self.outdir), 0o777)  # nosec
         self.append_volume(
             runtime, os.path.realpath(self.outdir), self.builder.outdir, writable=True
         )
-        os.chmod(os.path.realpath(self.tmpdir), 0o777)
+        os.chmod(os.path.realpath(self.tmpdir), 0o777)  # nosec
         self.append_volume(
             runtime, os.path.realpath(self.tmpdir), self.CONTAINER_TMPDIR, writable=True
         )
